@@ -1,0 +1,47 @@
+
+.dialog {
+
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 260px;
+  z-index: 5;
+
+  &::backdrop{
+    background-color: rgba(0,0,0,0.7);
+
+      //  filter: blur(4);
+  }
+ 
+
+ 
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    p{
+      font-size: medium;
+    }
+
+    label{
+      margin-bottom: 5px;
+    }
+    input{
+      margin-bottom: 10px;
+    }
+
+    div{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      button{
+      margin: 0 7px;
+  }
+    }
+    
+  }
+  
+
+}

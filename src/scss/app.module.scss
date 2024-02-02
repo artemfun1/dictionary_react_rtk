@@ -1,0 +1,18 @@
+.app {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+
+	.page {
+		width: 100vw;
+		flex-grow: 1;
+		display: flex;
+
+	
+
+		.main {
+			flex-grow: 1;
+			overflow: hidden;
+		}
+	}
+}

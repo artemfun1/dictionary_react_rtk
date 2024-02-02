@@ -1,3 +1,22 @@
-.header{
-  background-color: #878787;
+.header {
+	background-color: rgb(195, 195, 195);
+
+	height: 10vh;
+
+	display: flex;
+	align-items: center;
+
+	.link {
+		text-decoration: none;
+
+		div {
+			h1 {
+				margin-left: 0.5em;
+				color: rgb(58, 58, 58);
+				font-family: Cinzel, Helvetica, sans-serif;
+				text-decoration: none;
+				margin-bottom: 0;
+			}
+		}
+	}
 }
