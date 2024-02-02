@@ -1,11 +1,12 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import module from "./dictionaryItem.module.scss";
+import img from '../../img/12.png'
 
 export const DictionaryItem = () => {
 	return (
 		<div className={clsx(module.root, "card")}>
-			<img src="./img/12.png" className="card-img-top" alt="картинка" />
+			<img src={img} className="card-img-top" alt="картинка" />
 
 			<div className="card-body">
 				<h5 className="card-title">Название словаря</h5>

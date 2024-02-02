@@ -1,0 +1,39 @@
+.root {
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-bottom: 50px;
+	overflow: scroll;
+	height: 90vh;
+	display: flex;
+	justify-content: space-around;
+
+	.oneDiv {
+		flex-grow: 1;
+	}
+
+	.twoDiv {
+		flex-grow: 2;
+	}
+
+	.treeDiv {
+		flex-grow: 1;
+	}
+
+	div {
+		& > button {
+			margin-right: 10px;
+		}
+	}
+
+	div {
+		.headerTable {
+      padding-left: 5px;
+			background-color: #bfb433;
+			display: flex;
+			justify-content: start;
+			& > div {
+				width: 25%;
+			}
+		}
+	}
+}

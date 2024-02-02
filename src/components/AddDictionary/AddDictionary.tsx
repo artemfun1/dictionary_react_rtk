@@ -3,7 +3,7 @@ import module from "./addDictionary.module.scss";
 export const AddDictionary = () => {
 	return (
 		<>
-			<dialog id='id' className={module.dialog} >
+			<dialog id="id" className={module.dialog}>
 				<form action="" method="dialog">
 					<p>Создание нового словаря</p>
 					<label htmlFor="name">Введите название словаря:</label>
@@ -25,10 +25,10 @@ export const AddDictionary = () => {
 					/>
 
 					<div>
-						<button type="button" className="btn btn-warning">
+						<button type="button" className="btn btn-outline-warning">
 							Отмена
 						</button>
-						<button type="button" className="btn btn-success">
+						<button type="button" className="btn btn-outline-success">
 							Создать
 						</button>
 					</div>

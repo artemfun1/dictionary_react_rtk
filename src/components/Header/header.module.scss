@@ -1,7 +1,8 @@
 .header {
-	background-color: rgb(195, 195, 195);
+	background-color: rgb(120, 233, 212);
 
-	height: 10vh;
+	height: 70px;
+
 
 	display: flex;
 	align-items: center;
@@ -11,12 +12,17 @@
 
 		div {
 			h1 {
+				
 				margin-left: 0.5em;
-				color: rgb(58, 58, 58);
+				color: rgb(113, 112, 198);
 				font-family: Cinzel, Helvetica, sans-serif;
 				text-decoration: none;
 				margin-bottom: 0;
 			}
 		}
+	}
+	img{
+		width:100px;
+
 	}
 }

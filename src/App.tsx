@@ -1,28 +1,27 @@
 import { Route, Routes } from "react-router";
 
+import { AddDictionary } from "./components/AddDictionary";
 import { Header } from "./components/Header";
 import { Menu } from "./components/Menu";
-import { EditList } from "./pages/EditPage";
-import { Home } from "./pages/HomePage";
+import { EditPage } from "./pages/EditPage";
+import { HomePage } from "./pages/HomePage";
 import module from "./scss/app.module.scss";
-import { AddDictionary } from './components/AddDictionary'
 
 function App() {
 	return (
 		<div className={module.app}>
 			<Header />
-			{true && <AddDictionary/>}
 			<div className={module.page}>
 				<Menu />
 				<main className={module.main}>
 					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/edit" element={<EditList />} />
+						<Route path="/" element={<HomePage />} />
+						<Route path="/edit" element={<EditPage />} />
 					</Routes>
 				</main>
 			</div>
 		</div>
 	);
 }
-
+// {true && <AddDictionary />}
 export default App;

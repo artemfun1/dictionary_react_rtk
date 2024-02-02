@@ -1,18 +1,14 @@
 .app {
-	display: flex;
-	flex-direction: column;
 	height: 100vh;
+	overflow: hidden;
 
 	.page {
-		width: 100vw;
-		flex-grow: 1;
 		display: flex;
-
-	
 
 		.main {
 			flex-grow: 1;
-			overflow: hidden;
+
+			background-color: #e8f5f0;
 		}
 	}
 }
