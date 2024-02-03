@@ -1,28 +1,23 @@
 import { Link } from "react-router-dom";
 import module from "./menu.module.scss";
+import { useState } from 'react'
 
-export const Menu = () => {
-
+export const Menu = ({setIsOpen}:any) => {
 
 	
-
-
-	// function click(){
-	
-	// 	const dialog  =  document.getElementById('id') as HTMLDialogElement
-				
-	// 	dialog?.showModal()
-	// }
+	function handlerClick() {
+		setIsOpen(true)
+	}
 
 	return (
 		<aside className={module.root}>
 			<Link to="/">
-      <button type='button' className='btn btn-primary'>
-				Словари
-			</button>
-       </Link>
+				<button type="button" className="btn btn-primary">
+					Словари
+				</button>
+			</Link>
 
-			<button  type='button' className='btn btn-primary'>
+			<button onClick={handlerClick} type="button" className="btn btn-primary">
 				Добавить словарь
 			</button>
 		</aside>

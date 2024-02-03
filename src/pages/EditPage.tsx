@@ -21,20 +21,6 @@ export const EditPage = () => {
 
 				<div>
 					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
-					<WordItem />
 				</div>
 
 				<button type="button" className="btn btn-success">
