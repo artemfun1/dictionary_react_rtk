@@ -6,6 +6,8 @@ import module from "../scss/homePage.module.scss";
 export const HomePage = () => {
 	const dictionaries = useAppSelector(selectDictionary);
 
+	
+
 	return (
 		<div className={module.container}>
 			{!dictionaries.length && (
@@ -13,8 +15,8 @@ export const HomePage = () => {
 					Словариков нет, добавьте первый словарик
 				</p>
 			)}
-			{dictionaries.map((item, i) => (
-				<DictionaryItem key={i} card={item} />
+			{dictionaries.map((item) => (
+				<DictionaryItem key={item.idDic} card={item} />
 			))}
 		</div>
 	);

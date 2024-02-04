@@ -1,0 +1,2 @@
+export { AddWordItem } from './AddWordItem'
+

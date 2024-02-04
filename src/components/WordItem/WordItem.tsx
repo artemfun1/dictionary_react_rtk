@@ -1,35 +1,80 @@
 import module from "./wordItem.module.scss";
 
-import editSvg from '../../img/edit.svg'
-import removeSvg from '../../img/remove.svg'
+import { FunctionComponent, useState } from "react";
+import editSvg from "../../img/edit.svg";
+import removeSvg from "../../img/remove.svg";
 
-export const WordItem = () => {
+import {
+	IDictionaryItem,
+	IDictionaryState,
+	createDictionary,
+} from "../../redux/dictionsSlice";
+import { useAppDispatch } from "../../redux/store/hooksRedux";
+import { EditWord } from "../EditWord";
+
+interface props {
+	obj: IDictionaryState;
+	item: IDictionaryItem;
+}
+
+export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
+	const [editIsOpen, setEditIsOpen] = useState(false);
+
+	const dispatch = useAppDispatch();
+	function handlerClickEdit() {
+		setEditIsOpen(true);
+	}
+
+	function handlerClickDelete() {
+		const index = obj.itemsDic.findIndex(i => {
+			return i.itemId === item.itemId;
+		});
+
+		const copyArr = [...obj.itemsDic];
+		copyArr.splice(index, 1);
+
+		const newObg: IDictionaryState = {
+			...obj,
+			itemsDic: [...copyArr],
+		};
+
+		dispatch(createDictionary(newObg));
+	}
+
 	return (
 		<div className={module.root}>
+			<EditWord
+				obj={obj}
+				item={item}
+				editIsOpen={editIsOpen}
+				setEditIsOpen={setEditIsOpen}
+			></EditWord>
 			<div className={module.table}>
 				<div>
-					<p>исп</p>
+					<p>{item.isp}</p>
 				</div>
 				<div>
-					<p>рус</p>
+					<p>{item.rus}</p>
 				</div>
 				<div>
-					<p>англ</p>
+					<p>{item.eng}</p>
 				</div>
-
-
 
 				<div className={module.img}>
-					
-					
-				<img className={module.one} src={editSvg} alt="edit" />
+					<img
+						onClick={handlerClickEdit}
+						className={module.one}
+						src={editSvg}
+						alt="edit"
+					/>
 
-
-				<img className={module.two} src={removeSvg} alt="edit" />
-
-			
+					<img
+						onClick={handlerClickDelete}
+						className={module.two}
+						src={removeSvg}
+						alt="edit"
+					/>
 				</div>
-
 			</div>
 		</div>
 	);

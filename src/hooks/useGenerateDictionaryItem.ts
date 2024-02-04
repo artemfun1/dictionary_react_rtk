@@ -2,14 +2,13 @@ import { IDictionaryState } from "../redux/dictionsSlice";
 
 export const useGenerateDictionaryItem: (
 	a: string,
-	b: string,
-	c: string
-) => IDictionaryState = (imgUrl, name, id) => {
+	b: string
+) => IDictionaryState = (imgUrl, name) => {
 	return {
-		idDic: id,
+		idDic: Date.now().toString(),
 		imgDic: imgUrl,
 		nameDic: name,
 		numItemsInDic: 0,
-		itemsDic: [{ isp: "", rus: "", eng: "" }],
+		itemsDic: [{ isp: "", rus: "", eng: "", itemId: "" }],
 	};
 };

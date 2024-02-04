@@ -5,10 +5,11 @@ export interface IDictionaryItem {
 	isp: string;
 	rus: string;
 	eng: string;
+	itemId: string;
 }
 
 export interface IDictionaryState {
-	idDic:string;
+	idDic: string;
 	imgDic: string;
 	nameDic: string;
 	numItemsInDic: number;
@@ -21,28 +22,49 @@ export const dictionarySlice = createSlice({
 	name: "dictionaries",
 	initialState,
 	reducers: {
-		createDictionary: (state:Array<IDictionaryState>, action: PayloadAction<IDictionaryState>) => {
-			return [...state, action.payload]
-		  
+		createDictionary: (
+			state: Array<IDictionaryState>,
+			action: PayloadAction<IDictionaryState>
+		) => {
+			if (state.length === 0) {
+				return [...state, action.payload];
+			} else {
+				if (
+					state.filter(obg => obg.idDic === action.payload.idDic).length === 0
+				) {
+					return [...state, action.payload];
+				} else {
+					const index = state.findIndex(item => {
+						return item.idDic === action.payload.idDic;
+					});
+					state[index] = action.payload;
+				}
+			}
+		},
+		deleteDictionary: (
+			state: Array<IDictionaryState>,
+			action: PayloadAction<string>
+		) => {
+			const index = state.findIndex(item => {
+				return item.idDic === action.payload;
+			});
+			state = state.splice(index,1)
 		},
 	},
 });
 
-export const selectDictionary = (state: RootState) => state.dictionaries
+export const selectDictionary = (state: RootState) => state.dictionaries;
 
-export const { createDictionary,  } = dictionarySlice.actions;
+export const { createDictionary, deleteDictionary } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
-
-
 
 // imgDic: "",
 // 		nameDic: "",
 // 		numItemsInDic: 0,
 // 		itemsDic: [{ isp: "", rus: "", eng: "" }],
 
-
-	// removeDictionary: (state, action: PayloadAction<IDictionaryState>) => {
-		// 	console.log(action)
-		// 	state.push(action.payload)
-		// },
+// removeDictionary: (state, action: PayloadAction<IDictionaryState>) => {
+// 	console.log(action)
+// 	state.push(action.payload)
+// },

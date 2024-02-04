@@ -1,8 +1,8 @@
-import { useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useGenerateDictionaryItem } from "../../hooks/useGenerateDictionaryItem";
-import { createDictionary, selectDictionary } from "../../redux/dictionsSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/store/hooksRedux";
+import { createDictionary } from "../../redux/dictionsSlice";
+import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addDictionary.module.scss";
 
 export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
@@ -10,17 +10,16 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 	const [imgUrl, setImgUrl] = useState("");
 
 	const dispatch = useAppDispatch();
-	const dictionaries = useAppSelector(selectDictionary);
 
 	function handlerChangeName(e: any) {
 		setName(e.target.value);
 	}
+	
 	function handlerChangeImgUrl(e: any) {
 		setImgUrl(e.target.value);
 	}
-	let id = useId();
-
-	const obj = useGenerateDictionaryItem(imgUrl, name, id);
+ 
+	const obj = useGenerateDictionaryItem(imgUrl, name);
 
 	function handlerSubmit() {
 		dispatch(createDictionary(obj));
@@ -45,7 +44,7 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 	}
 
 	const addDictionary = (
-		<>
+		
 			<dialog ref={dialog} id="id" className={module.dialog}>
 				<form onSubmit={handlerSubmit} action="" method="dialog">
 					<p>Создание нового словаря</p>
@@ -85,7 +84,7 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 					</div>
 				</form>
 			</dialog>
-		</>
+		
 	);
 
 	return createPortal(

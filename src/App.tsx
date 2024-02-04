@@ -8,9 +8,10 @@ import { useAppSelector } from "./redux/store/hooksRedux";
 import module from "./scss/app.module.scss";
 import { selectDictionary } from './redux/dictionsSlice'
 import { useState } from 'react'
+import { NotFoundPage } from './pages/NotFoundPage'
 
 function App() {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpenAddDic, setIsOpenAddDic] = useState(false)
 
 	const dictionary = useAppSelector(selectDictionary);
 
@@ -18,14 +19,15 @@ function App() {
 
 	return (
 		<div className={module.app}>
-			<AddDictionary isOpen={isOpen} setIsOpen={setIsOpen} />
+			<AddDictionary isOpen={isOpenAddDic} setIsOpen={setIsOpenAddDic} />
 			<Header />
 			<div className={module.page}>
-				<Menu setIsOpen={setIsOpen} />
+				<Menu setIsOpen={setIsOpenAddDic} />
 				<main className={module.main}>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
 						<Route path="/edit" element={<EditPage  />} />
+						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>
 			</div>
