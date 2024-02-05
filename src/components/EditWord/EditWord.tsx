@@ -1,11 +1,11 @@
-import React, { FunctionComponent, useRef, useState } from "react";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 
 import { createPortal } from "react-dom";
 import {
 	IDictionaryItem,
 	IDictionaryState,
 	createDictionary,
-} from "../../redux/dictionsSlice";
+} from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./editWord.module.scss";
 
@@ -14,6 +14,7 @@ interface IProps {
 	setEditIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	obj: IDictionaryState;
 	item: IDictionaryItem;
+	content: string;
 }
 
 export const EditWord: FunctionComponent<IProps> = ({
@@ -21,11 +22,14 @@ export const EditWord: FunctionComponent<IProps> = ({
 	setEditIsOpen,
 	obj,
 	item,
+	content,
 }) => {
 	const [newWord, setNewWord] = useState("");
 
-	// console.log(obj)
-	// console.log(item)
+	useEffect(() => {
+		setNewWord(content);
+	},[content]);
+
 
 	const dispatch = useAppDispatch();
 
@@ -60,12 +64,12 @@ export const EditWord: FunctionComponent<IProps> = ({
 
 		dispatch(createDictionary(newObg));
 
-		setNewWord("");
+		setNewWord(content);
 		setEditIsOpen(false);
 	}
 
 	function handlerCancelClick() {
-		setNewWord("");
+		setNewWord(content);
 		setEditIsOpen(false);
 	}
 
@@ -83,17 +87,24 @@ export const EditWord: FunctionComponent<IProps> = ({
 				<label htmlFor="word">
 					<p>Отредактируйте слово или фразу на испанском</p>
 					<input
+						autoComplete="off"
 						name="name"
 						onChange={e => handlerInput(e)}
 						value={newWord}
 						type="text"
-						placeholder="Новое слово или фраза"
+						// placeholder="Новое слово или фраза"
 						required
 					/>
 
-					<button type="submit">Отредактировать</button>
+					<button type="submit" className="btn btn-outline-success ">
+						Отредактировать
+					</button>
 
-					<button type="button" onClick={handlerCancelClick}>
+					<button
+						type="button"
+						className="btn btn-outline-warning"
+						onClick={handlerCancelClick}
+					>
 						Отмена
 					</button>
 				</label>

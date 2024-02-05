@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 
 import { Link, useNavigate } from "react-router-dom";
 import { AddWordItem } from "../components/AddWordItem";
-import { selectCardId } from "../redux/cardIdSlice";
-import { deleteDictionary, selectDictionary } from "../redux/dictionsSlice";
+import { deleteDictionary, selectDictionary } from "../redux/features/dictionsSlice";
+import { selectCardId } from "../redux/features/cardIdSlice";
 import module from "../scss/editPage.module.scss";
 
 export const EditPage = () => {
@@ -37,7 +37,7 @@ export const EditPage = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!cardId) {
+		if (!objCard[0]?.itemsDic) {
 			navigate("/");
 		}
 	});
@@ -78,7 +78,7 @@ export const EditPage = () => {
 				</div>
 
 				<div>
-					{Boolean(objCard[0]?.itemsDic[0].itemId) ? (
+					{Boolean(objCard[0]?.itemsDic[0]?.itemId) ? (
 						objCard[0]?.itemsDic.map(item => (
 							<WordItem key={item.itemId} obj={objCard[0]} item={item} />
 						))

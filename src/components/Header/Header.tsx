@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import loshadka from "../../img/loshadka.png";
-import { selectCardId } from "../../redux/cardIdSlice";
-import { selectDictionary } from "../../redux/dictionsSlice";
+import { selectDictionary } from "../../redux/features/dictionsSlice";
+import { selectCardId } from "../../redux/features/cardIdSlice";
 import module from "./header.module.scss";
 
 export const Header = () => {

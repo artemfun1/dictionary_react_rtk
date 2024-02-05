@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useGenerateDictionaryItem } from "../../hooks/useGenerateDictionaryItem";
-import { createDictionary } from "../../redux/dictionsSlice";
+import { createDictionary } from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addDictionary.module.scss";
 
@@ -50,6 +50,7 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 					<p>Создание нового словаря</p>
 					<label htmlFor="name">Введите название словаря:</label>
 					<input
+					autoComplete='off'
 						onChange={e => handlerChangeName(e)}
 						placeholder="Название"
 						type="text"
@@ -61,6 +62,7 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 
 					<label htmlFor="img">Вставьте ссылку на картинку:</label>
 					<input
+					autoComplete='off'
 						onChange={e => handlerChangeImgUrl(e)}
 						placeholder="Ссылка на картинку"
 						type="text"
@@ -78,6 +80,8 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 						>
 							Отмена
 						</button>
+
+						
 						<button type="submit" className="btn btn-outline-success">
 							Создать
 						</button>

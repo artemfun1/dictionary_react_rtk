@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Navigate, Route, Routes } from "react-router";
 import { AddDictionary } from "./components/AddDictionary";
 import { EditPage } from './pages/EditPage'
 import { Header } from "./components/Header";
@@ -6,7 +6,7 @@ import { Menu } from "./components/Menu";
 import { HomePage } from "./pages/HomePage";
 import { useAppSelector } from "./redux/store/hooksRedux";
 import module from "./scss/app.module.scss";
-import { selectDictionary } from './redux/dictionsSlice'
+import { selectDictionary } from './redux/features/dictionsSlice'
 import { useState } from 'react'
 import { NotFoundPage } from './pages/NotFoundPage'
 
@@ -26,7 +26,8 @@ function App() {
 				<main className={module.main}>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="/edit" element={<EditPage  />} />
+						<Route path="/edit/:editId" element={<EditPage  />} />
+					
 						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>

@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
 import module from "./menu.module.scss";
-import { useState } from 'react'
 
-export const Menu = ({setIsOpen}:any) => {
-
-	
+export const Menu = ({ setIsOpen }: any) => {
 	function handlerClick() {
-		setIsOpen(true)
+		setIsOpen(true);
 	}
 
 	return (

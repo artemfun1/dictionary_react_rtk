@@ -4,9 +4,10 @@ import {
 	IDictionaryItem,
 	IDictionaryState,
 	createDictionary,
-} from "../../redux/dictionsSlice";
+} from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addWordItem.module.scss";
+import { nanoid } from '@reduxjs/toolkit'
 
 interface props {
 	addIsOpen: boolean;
@@ -24,29 +25,27 @@ export const AddWordItem: FunctionComponent<props> = ({
 	const dispatch = useAppDispatch();
 
 	function handlerInput(e: any) {
-   
-    if((e.target.value).match(/\d/)){
-      alert("можно вводить только буквы латинского алфавита без цифр ")
-      setNewWord("");
-      return
-    }
+		if (e.target.value.match(/\d/)) {
+			alert("можно вводить только буквы латинского алфавита без цифр ");
+			setNewWord("");
+			return;
+		}
 		setNewWord(e.target.value);
 	}
 
 	function handlerSubmitForm(e: any) {
-
-    if(dataObj.itemsDic.length===20){
-      alert("Максимум 20 фраз/слов в одном словарике")
-      setNewWord("");
-      setAddIsOpen(false);
-      return
-    }
+		if (dataObj.itemsDic.length === 20) {
+			alert("Максимум 20 фраз/слов в одном словарике");
+			setNewWord("");
+			setAddIsOpen(false);
+			return;
+		}
 		if (dataObj.itemsDic.length === 1 && !Boolean(dataObj.itemsDic[0].itemId)) {
 			const newWords: IDictionaryItem = {
 				isp: newWord,
 				rus: "перевод рус",
 				eng: "перевод англ",
-				itemId: Date.now().toString(),
+				itemId: nanoid(),
 			};
 
 			const newObg: IDictionaryState = {
@@ -59,7 +58,7 @@ export const AddWordItem: FunctionComponent<props> = ({
 				isp: newWord,
 				rus: "перевод рус",
 				eng: "перевод англ",
-				itemId: Date.now().toString(),
+				itemId: nanoid(),
 			};
 
 			const newObg: IDictionaryState = {
@@ -93,6 +92,7 @@ export const AddWordItem: FunctionComponent<props> = ({
 				<label htmlFor="word">
 					<p>Введите новое слово или фразу на испанском</p>
 					<input
+						autoComplete="off"
 						name="name"
 						onChange={e => handlerInput(e)}
 						value={newWord}
@@ -100,12 +100,18 @@ export const AddWordItem: FunctionComponent<props> = ({
 						placeholder="Новое слово или фраза"
 						required
 					/>
-
-					<button type="submit">Создать</button>
-
-					<button type="button" onClick={handlerCancelClick}>
-						Отмена
-					</button>
+					<div>
+						<button
+							type="button"
+							className="btn btn-outline-warning"
+							onClick={handlerCancelClick}
+						>
+							Отмена
+						</button>
+						<button type="submit" className="btn btn-outline-success">
+							Создать
+						</button>
+					</div>
 				</label>
 			</form>
 		</dialog>

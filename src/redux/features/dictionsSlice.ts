@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "./store/store";
+import { RootState } from "../store/store";
 
 export interface IDictionaryItem {
 	isp: string;
@@ -59,12 +59,4 @@ export const { createDictionary, deleteDictionary } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
 
-// imgDic: "",
-// 		nameDic: "",
-// 		numItemsInDic: 0,
-// 		itemsDic: [{ isp: "", rus: "", eng: "" }],
-
-// removeDictionary: (state, action: PayloadAction<IDictionaryState>) => {
-// 	console.log(action)
-// 	state.push(action.payload)
-// },
+// https://79bfd0f11687a52a.mokky.dev/dic

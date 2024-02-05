@@ -8,7 +8,7 @@ import {
 	IDictionaryItem,
 	IDictionaryState,
 	createDictionary,
-} from "../../redux/dictionsSlice";
+} from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import { EditWord } from "../EditWord";
 
@@ -20,9 +20,13 @@ interface props {
 export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 	const [editIsOpen, setEditIsOpen] = useState(false);
 
+	const [content, setContent] = useState("");
+
+
 	const dispatch = useAppDispatch();
-	function handlerClickEdit() {
+	function handlerClickEdit(e: string) {
 		setEditIsOpen(true);
+		setContent(e);
 	}
 
 	function handlerClickDelete() {
@@ -48,6 +52,7 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 				item={item}
 				editIsOpen={editIsOpen}
 				setEditIsOpen={setEditIsOpen}
+				content={content}
 			></EditWord>
 			<div className={module.table}>
 				<div>
@@ -62,7 +67,7 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 
 				<div className={module.img}>
 					<img
-						onClick={handlerClickEdit}
+						onClick={() => handlerClickEdit(item.isp)}
 						className={module.one}
 						src={editSvg}
 						alt="edit"
