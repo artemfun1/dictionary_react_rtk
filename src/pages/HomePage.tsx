@@ -43,10 +43,10 @@ export const HomePage = () => {
 			</div> */}
 
 			{!dictionaries.length && (
-				<p style={{ marginTop: "70px" }}>
+				<div style={{ marginTop: "70px" }}>
 					<h4>Словарей нет, добавьте первый словарь</h4>
 					<h6>В словаре добавьте слово или фразу на испанском и получите перевод на русский и английский</h6>
-				</p>
+				</div>
 			)}
 			{dictionaries.map(item => (
 				<DictionaryItem key={item.idDic} card={item} />
