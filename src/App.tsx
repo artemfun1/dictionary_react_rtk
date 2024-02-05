@@ -13,7 +13,7 @@ import { NotFoundPage } from './pages/NotFoundPage'
 function App() {
 	const [isOpenAddDic, setIsOpenAddDic] = useState(false)
 
-	const dictionary = useAppSelector(selectDictionary);
+	// const dictionary = useAppSelector(selectDictionary);
 
 	// https://img.freepik.com/free-photo/a-cupcake-with-a-strawberry-on-top-and-a-strawberry-on-the-top_1340-35087.jpg
 
@@ -26,8 +26,7 @@ function App() {
 				<main className={module.main}>
 					<Routes>
 						<Route path="/" element={<HomePage />} />
-						<Route path="/edit/:editId" element={<EditPage  />} />
-					
+						<Route path="/edit" element={<EditPage  />} />
 						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>

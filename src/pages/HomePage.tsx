@@ -8,22 +8,22 @@ import { useEffect } from 'react'
 export const HomePage = () => {
 	const dictionaries = useAppSelector(selectDictionary);
 
-	const count = useAppSelector(state => state.count);
-	const dispatch = useAppDispatch();
+	// const count = useAppSelector(state => state.count);
+	// const dispatch = useAppDispatch();
 
-	function clickPlus() {
-		dispatch(increment(10));
-	}
+	// function clickPlus() {
+	// 	dispatch(increment(10));
+	// }
 
 
-	useEffect(()=>{
-	dispatch(fetchPosts())
-	},[dispatch])
+	// useEffect(()=>{
+	// dispatch(fetchPosts())
+	// },[dispatch])
 
-	function clickMinus() {
-		dispatch(decrement());
+	// function clickMinus() {
+	// 	dispatch(decrement());
 		
-	}
+	// }
 
 
 
@@ -35,16 +35,17 @@ export const HomePage = () => {
 
 	return (
 		<div className={module.container}>
-			<div>
+			{/* <div>
 				<button onClick={clickMinus}>-</button>
 				<p>{count.value}</p>
 				<button onClick={clickPlus}>+</button>
 				<p>{JSON.stringify(count,null,2)}</p>
-			</div>
+			</div> */}
 
 			{!dictionaries.length && (
 				<p style={{ marginTop: "70px" }}>
-					Словариков нет, добавьте первый словарик
+					<h4>Словарей нет, добавьте первый словарь</h4>
+					<h6>В словаре добавьте слово или фразу на испанском и получите перевод на русский и английский</h6>
 				</p>
 			)}
 			{dictionaries.map(item => (
