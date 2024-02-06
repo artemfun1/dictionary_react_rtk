@@ -8,7 +8,7 @@ export const Menu = ({ setIsOpen }: any) => {
 
 	return (
 		<aside className={module.root}>
-			<Link to="/">
+			<Link to="dictionary_react_rtk">
 				<button type="button" className="btn btn-primary">
 					Словари
 				</button>

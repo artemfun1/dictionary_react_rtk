@@ -60,6 +60,14 @@ export const fetchDeleteDicItem = createAsyncThunk(
 	}
 );
 
+export const fetchDeleteAll = createAsyncThunk(
+	"dictionaries/fetchDeleteAll",
+	async (_, { dispatch }) => {
+		await axios.patch(`https://79bfd0f11687a52a.mokky.dev/dic/`, []);
+		dispatch(deleteAll());
+	}
+);
+
 export const dictionarySlice = createSlice({
 	name: "dictionaries",
 	initialState,
@@ -96,21 +104,21 @@ export const dictionarySlice = createSlice({
 			);
 			state.arrayDictionaries = [...filteredArr];
 		},
-
-		createDictionary() {},
+		deleteAll(state: { arrayDictionaries: IDictionaryState[] }) {
+			state.arrayDictionaries = [];
+		},
 	},
 });
 
 export const selectDictionary = (state: RootState) => state.dictionaries;
 
 export const {
-	createDictionary,
 	createDictionaryItem,
 	setDictionaryItems,
 	addWordInDic,
 	deleteDicItem,
+	deleteAll,
 } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
 
-// https://79bfd0f11687a52a.mokky.dev/dic

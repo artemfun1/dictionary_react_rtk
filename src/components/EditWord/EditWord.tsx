@@ -43,8 +43,8 @@ export const EditWord: FunctionComponent<IProps> = ({
 
 	function handlerSubmitForm() {
 		const editWordsObg: IDictionaryItem = {
-			isp: newWord,
-			rus: item.rus,
+			rus: newWord,
+			isp: item.isp,
 			eng: item.eng,
 			itemId: item.itemId,
 		};
