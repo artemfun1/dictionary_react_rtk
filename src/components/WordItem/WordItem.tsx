@@ -66,7 +66,7 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 
 				<div className={module.img}>
 					<img
-						onClick={() => handlerClickEdit(item.isp)}
+						onClick={() => handlerClickEdit(item.rus)}
 						className={module.one}
 						src={editSvg}
 						alt="edit"

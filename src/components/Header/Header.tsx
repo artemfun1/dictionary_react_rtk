@@ -14,7 +14,7 @@ export const Header = () => {
 
 	return (
 		<div className={module.header}>
-			<Link className={module.link} to="dictionary_react_rtk">
+			<Link className={module.link} to="/dictionary_react_rtk">
 				<div>
 					<h1>Dictionary</h1>
 				</div>

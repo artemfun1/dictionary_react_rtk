@@ -44,6 +44,7 @@ export const fetchGetDictionaryItems = createAsyncThunk(
 export const fetchAddWordItem = createAsyncThunk(
 	"dictionaries/fetchAddWordItem",
 	async (newObj: IDictionaryState, { dispatch }) => {
+
 		await axios.patch(
 			`https://79bfd0f11687a52a.mokky.dev/dic/${newObj.id}`,
 			newObj
@@ -121,4 +122,3 @@ export const {
 } = dictionarySlice.actions;
 
 export default dictionarySlice.reducer;
-

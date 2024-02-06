@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 
+import axios from "axios";
 import { createPortal } from "react-dom";
 import {
 	IDictionaryItem,
@@ -41,13 +42,46 @@ export const EditWord: FunctionComponent<IProps> = ({
 		setNewWord(e.target.value);
 	}
 
-	function handlerSubmitForm() {
-		const editWordsObg: IDictionaryItem = {
+	async function createAndTranslate() {
+		const LANG = {
+			RUS: "ru",
+			ENG: "en",
+			ISP: "es",
+		};
+		const ispUrl =
+			"https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
+			LANG.RUS +
+			"&tl=" +
+			LANG.ISP +
+			"&dt=t&q=" +
+			encodeURI(newWord);
+
+		const engUrl =
+			"https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
+			LANG.RUS +
+			"&tl=" +
+			LANG.ENG +
+			"&dt=t&q=" +
+			encodeURI(newWord);
+
+		const getIspWord = await axios.get(ispUrl);
+		const ispWord = getIspWord.data[0][0][0];
+
+		const getEngWord = await axios.get(engUrl);
+		const engWord = getEngWord.data[0][0][0];
+
+		const newObj: IDictionaryItem = {
 			rus: newWord,
-			isp: item.isp,
-			eng: item.eng,
+			isp: ispWord,
+			eng: engWord,
 			itemId: item.itemId,
 		};
+
+		return newObj;
+	}
+
+	async function handlerSubmitForm() {
+		const editWordsObg: IDictionaryItem = await createAndTranslate();
 
 		const index = obj.itemsDic.findIndex(item => {
 			return item.itemId === editWordsObg.itemId;
@@ -84,7 +118,7 @@ export const EditWord: FunctionComponent<IProps> = ({
 		<dialog ref={dialogAdd} className={module.root}>
 			<form onSubmit={handlerSubmitForm} method="dialog" action="">
 				<label htmlFor="word">
-					<p>Отредактируйте слово или фразу на испанском</p>
+					<p>Редактирование</p>
 					<input
 						autoComplete="off"
 						name="name"

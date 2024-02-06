@@ -1,4 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
+import axios from "axios";
 import React, { FunctionComponent, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -23,6 +24,46 @@ export const AddWordItem: FunctionComponent<props> = ({
 	const [newWord, setNewWord] = useState("");
 
 	const dispatch = useAppDispatch();
+	
+
+	async function createAndTranslate() {
+		const LANG = {
+			RUS: "ru",
+			ENG: "en",
+			ISP: "es",
+		};
+		const ispUrl =
+			"https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
+			LANG.RUS +
+			"&tl=" +
+			LANG.ISP +
+			"&dt=t&q=" +
+			encodeURI(newWord);
+
+		const engUrl =
+			"https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
+			LANG.RUS +
+			"&tl=" +
+			LANG.ENG +
+			"&dt=t&q=" +
+			encodeURI(newWord);
+
+		const getIspWord = await axios.get(ispUrl);
+		const ispWord = getIspWord.data[0][0][0];
+
+		const getEngWord = await axios.get(engUrl);
+		const engWord = getEngWord.data[0][0][0];
+
+		const newObj: IDictionaryItem = {
+			rus: newWord,
+			isp: ispWord,
+			eng: engWord,
+			itemId: nanoid(),
+		};
+		console.log(newObj);
+
+		return newObj;
+	}
 
 	function handlerInput(e: any) {
 		if (e.target.value.match(/\d/)) {
@@ -33,20 +74,15 @@ export const AddWordItem: FunctionComponent<props> = ({
 		setNewWord(e.target.value);
 	}
 
-	function handlerSubmitForm(e: any) {
+	async function handlerSubmitForm(e: any) {
 		if (dataObj?.itemsDic.length === 5) {
-			alert("Максимум 20 фраз/слов в одном словарике");
+			alert("Максимум 5 фраз/слов в одном словарике");
 			setNewWord("");
 			setAddIsOpen(false);
 			return;
 		}
 
-		const newWords: IDictionaryItem = {
-			rus: newWord,
-			isp: "перевод исп",
-			eng: "перевод англ",
-			itemId: nanoid(),
-		};
+		const newWords: IDictionaryItem = await createAndTranslate();
 
 		if (
 			dataObj?.itemsDic.length === 1 &&
@@ -87,7 +123,7 @@ export const AddWordItem: FunctionComponent<props> = ({
 		<dialog ref={dialogAdd} className={module.root}>
 			<form onSubmit={handlerSubmitForm} method="dialog" action="">
 				<label htmlFor="word">
-					<p>Введите новое слово или фразу на испанском</p>
+					<p>Введите новое слово или фразу на русском языке</p>
 					<input
 						autoComplete="off"
 						name="name"
