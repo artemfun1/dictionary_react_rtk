@@ -1,6 +1,10 @@
-# Getting Started with Create React App
+# GitHub Pages
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+https://artemfun1.github.io/dictionary_react_rtk
+
+
+
+
 
 ## Available Scripts
 
