@@ -1,11 +1,19 @@
+import { useEffect } from "react";
 import { DictionaryItem } from "../components/DictionaryItem";
-import { selectDictionary } from "../redux/features/dictionsSlice";
-import { decrement, fetchPosts, increment } from "../redux/features/counterSlice";
+import {
+	fetchGetDictionaryItems,
+	selectDictionary,
+} from "../redux/features/dictionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/homePage.module.scss";
-import { useEffect } from 'react'
 
 export const HomePage = () => {
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(fetchGetDictionaryItems());
+	}, [dispatch]);
+
 	const dictionaries = useAppSelector(selectDictionary);
 
 	// const count = useAppSelector(state => state.count);
@@ -14,24 +22,14 @@ export const HomePage = () => {
 	// function clickPlus() {
 	// 	dispatch(increment(10));
 	// }
-
-
 	// useEffect(()=>{
-	// dispatch(fetchPosts())
+	// dispatch(getFetchCount())
 	// },[dispatch])
 
 	// function clickMinus() {
 	// 	dispatch(decrement());
-		
+	// 	dispatch(getFetchCount())
 	// }
-
-
-
-
-
-
-
-
 
 	return (
 		<div className={module.container}>
@@ -42,13 +40,16 @@ export const HomePage = () => {
 				<p>{JSON.stringify(count,null,2)}</p>
 			</div> */}
 
-			{!dictionaries.length && (
+			{!dictionaries.arrayDictionaries.length && (
 				<div style={{ marginTop: "70px" }}>
 					<h4>Словарей нет, добавьте первый словарь</h4>
-					<h6>В словаре добавьте слово или фразу на испанском и получите перевод на русский и английский</h6>
+					<h6>
+						В словаре добавьте слово или фразу на русском и получите перевод на
+						испанский и английский
+					</h6>
 				</div>
 			)}
-			{dictionaries.map(item => (
+			{dictionaries.arrayDictionaries.map(item => (
 				<DictionaryItem key={item.idDic} card={item} />
 			))}
 		</div>

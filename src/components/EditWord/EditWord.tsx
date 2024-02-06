@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import {
 	IDictionaryItem,
 	IDictionaryState,
-	createDictionary,
+	fetchAddWordItem,
 } from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./editWord.module.scss";
@@ -28,14 +28,13 @@ export const EditWord: FunctionComponent<IProps> = ({
 
 	useEffect(() => {
 		setNewWord(content);
-	},[content]);
-
+	}, [content]);
 
 	const dispatch = useAppDispatch();
 
 	function handlerInput(e: any) {
 		if (e.target.value.match(/\d/)) {
-			alert("можно вводить только буквы латинского алфавита без цифр ");
+			alert("можно вводить только буквы, без цифр ");
 			setNewWord("");
 			return;
 		}
@@ -62,7 +61,7 @@ export const EditWord: FunctionComponent<IProps> = ({
 			itemsDic: [...copyArr],
 		};
 
-		dispatch(createDictionary(newObg));
+		dispatch(fetchAddWordItem(newObg));
 
 		setNewWord(content);
 		setEditIsOpen(false);

@@ -1,18 +1,18 @@
+import { nanoid } from "@reduxjs/toolkit";
 import React, { FunctionComponent, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
 	IDictionaryItem,
 	IDictionaryState,
-	createDictionary,
+	fetchAddWordItem,
 } from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addWordItem.module.scss";
-import { nanoid } from '@reduxjs/toolkit'
 
 interface props {
 	addIsOpen: boolean;
 	setAddIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-	dataObj: IDictionaryState;
+	dataObj: IDictionaryState | undefined;
 }
 
 export const AddWordItem: FunctionComponent<props> = ({
@@ -26,7 +26,7 @@ export const AddWordItem: FunctionComponent<props> = ({
 
 	function handlerInput(e: any) {
 		if (e.target.value.match(/\d/)) {
-			alert("можно вводить только буквы латинского алфавита без цифр ");
+			alert("можно вводить только буквы без цифр ");
 			setNewWord("");
 			return;
 		}
@@ -34,39 +34,36 @@ export const AddWordItem: FunctionComponent<props> = ({
 	}
 
 	function handlerSubmitForm(e: any) {
-		if (dataObj.itemsDic.length === 20) {
+		if (dataObj?.itemsDic.length === 5) {
 			alert("Максимум 20 фраз/слов в одном словарике");
 			setNewWord("");
 			setAddIsOpen(false);
 			return;
 		}
-		if (dataObj.itemsDic.length === 1 && !Boolean(dataObj.itemsDic[0].itemId)) {
-			const newWords: IDictionaryItem = {
-				isp: newWord,
-				rus: "перевод рус",
-				eng: "перевод англ",
-				itemId: nanoid(),
-			};
 
+		const newWords: IDictionaryItem = {
+			rus: newWord,
+			isp: "перевод исп",
+			eng: "перевод англ",
+			itemId: nanoid(),
+		};
+
+		if (
+			dataObj?.itemsDic.length === 1 &&
+			!Boolean(dataObj.itemsDic[0].itemId)
+		) {
 			const newObg: IDictionaryState = {
 				...dataObj,
 				itemsDic: [newWords],
 			};
-			dispatch(createDictionary(newObg));
-		} else {
-			const newWords: IDictionaryItem = {
-				isp: newWord,
-				rus: "перевод рус",
-				eng: "перевод англ",
-				itemId: nanoid(),
-			};
-
+			dispatch(fetchAddWordItem(newObg));
+		} else if (dataObj?.itemsDic) {
 			const newObg: IDictionaryState = {
 				...dataObj,
 				itemsDic: [...dataObj.itemsDic, newWords],
 			};
 
-			dispatch(createDictionary(newObg));
+			dispatch(fetchAddWordItem(newObg));
 		}
 
 		setNewWord("");

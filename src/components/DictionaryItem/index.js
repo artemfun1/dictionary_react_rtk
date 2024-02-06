@@ -1,2 +1,1 @@
-export { DictionaryItem } from './DictionaryItem'
-
+export { DictionaryItem } from "./DictionaryItem";

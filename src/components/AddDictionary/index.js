@@ -1,2 +1,1 @@
-export { AddDictionary } from './AddDictionary'
-
+export { AddDictionary } from "./AddDictionary";

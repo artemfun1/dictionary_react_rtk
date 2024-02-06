@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import dictionaryReducer from "../features/dictionsSlice";
 import cardIdReducer from "../features/cardIdSlice";
-import counterReducer, { increment, selectCount } from "../features/counterSlice";
-import { useAppDispatch, useAppSelector } from './hooksRedux'
+import counterReducer from "../features/counterSlice";
+import dictionaryReducer from "../features/dictionsSlice";
 
 export const store = configureStore({
 	reducer: {
@@ -11,12 +10,7 @@ export const store = configureStore({
 		cardId: cardIdReducer,
 		count: counterReducer,
 	},
-})
-
-
-
-
-
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 

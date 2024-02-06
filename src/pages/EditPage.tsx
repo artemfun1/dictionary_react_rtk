@@ -1,55 +1,53 @@
 import { useEffect, useState } from "react";
-import { WordItem } from "../components/WordItem";
-
-import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
-
 import { Link, useNavigate } from "react-router-dom";
 import { AddWordItem } from "../components/AddWordItem";
-import { deleteDictionary, selectDictionary } from "../redux/features/dictionsSlice";
+import { WordItem } from "../components/WordItem";
 import { selectCardId } from "../redux/features/cardIdSlice";
+import { fetchDeleteDicItem } from "../redux/features/dictionsSlice";
+import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/editPage.module.scss";
 
 export const EditPage = () => {
 	const [addIsOpen, setAddIsOpen] = useState(false);
 
-	const dictionaryObjects = useAppSelector(selectDictionary);
+	const dictionaryObjects = useAppSelector(
+		state => state.dictionaries.arrayDictionaries
+	);
 
 	const dispatch = useAppDispatch();
 
 	const cardId = useAppSelector(selectCardId);
 
-	const objCard = dictionaryObjects?.filter(item => {
+	const objCard = dictionaryObjects?.find(item => {
 		return item.idDic === cardId;
 	});
-
-	// const arr = objCard[0]?.itemsDic.map(item => (
-	// 	<WordItem key={item.itemId} item={item} />
-	// ));
 
 	function handlerAddWord() {
 		setAddIsOpen(true);
 	}
 
 	function handlerDeleteDic() {
-		dispatch(deleteDictionary(cardId));
+		if (objCard) {
+			dispatch(fetchDeleteDicItem(objCard));
+		}
 	}
 
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!objCard[0]?.itemsDic) {
+		if (!objCard) {
 			navigate("/");
 		}
 	});
 
 	function calcNumItems() {
 		if (
-			objCard[0]?.itemsDic.length === 1 &&
-			!Boolean(objCard[0]?.itemsDic[0].itemId)
+			objCard?.itemsDic.length === 1 &&
+			!Boolean(objCard?.itemsDic[0].itemId)
 		) {
 			return 0;
 		}
-		return objCard[0]?.itemsDic.length;
+		return objCard?.itemsDic.length;
 	}
 
 	const numItems = calcNumItems();
@@ -59,28 +57,28 @@ export const EditPage = () => {
 			<div className={module.oneDiv}></div>
 			<div className={module.twoDiv}>
 				<AddWordItem
-					dataObj={objCard[0]}
+					dataObj={objCard}
 					addIsOpen={addIsOpen}
 					setAddIsOpen={setAddIsOpen}
 				></AddWordItem>
 				<p>
-					Редактирование словарика: {objCard[0]?.nameDic}
+					Редактирование словарика: {objCard?.nameDic}
 					<span style={{ marginLeft: "20px" }}>
-						Сейчас в нем {numItems}/20 слов
+						Сейчас в нем <span style={{fontWeight:'bold'}}>{numItems}/5 </span> фраз
 					</span>
 				</p>
 
 				<div className={module.headerTable}>
-					<div>Испанский</div>
 					<div>Русский</div>
+					<div>Испанский</div>
 					<div>Английский</div>
 					<div></div>
 				</div>
 
 				<div>
-					{Boolean(objCard[0]?.itemsDic[0]?.itemId) ? (
-						objCard[0]?.itemsDic.map(item => (
-							<WordItem key={item.itemId} obj={objCard[0]} item={item} />
+					{Boolean(objCard?.itemsDic[0]?.itemId) ? (
+						objCard?.itemsDic.map(item => (
+							<WordItem key={item.itemId} obj={objCard} item={item} />
 						))
 					) : (
 						<p>{"Пустой словарик, добавьте первое слово :)"}</p>

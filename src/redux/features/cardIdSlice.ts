@@ -25,13 +25,3 @@ export const selectCardId = (state: RootState) => state.cardId.value;
 export const { createCardId } = editCardId.actions;
 
 export default editCardId.reducer;
-
-// imgDic: "",
-// 		nameDic: "",
-// 		numItemsInDic: 0,
-// 		itemsDic: [{ isp: "", rus: "", eng: "" }],
-
-// removeDictionary: (state, action: PayloadAction<IDictionaryState>) => {
-// 	console.log(action)
-// 	state.push(action.payload)
-// },

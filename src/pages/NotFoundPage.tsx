@@ -1,7 +1,4 @@
-import React from 'react'
-import module from '../scss/notFoundPage.module.scss'
+import module from "../scss/notFoundPage.module.scss";
 export const NotFoundPage = () => {
-  return (
-    <div className={module.container}>Такой страницы нет</div>
-  )
-}
+	return <div className={module.container}>Такой страницы нет</div>;
+};

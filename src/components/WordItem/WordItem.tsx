@@ -7,7 +7,7 @@ import removeSvg from "../../img/remove.svg";
 import {
 	IDictionaryItem,
 	IDictionaryState,
-	createDictionary,
+	fetchAddWordItem,
 } from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import { EditWord } from "../EditWord";
@@ -21,7 +21,6 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 	const [editIsOpen, setEditIsOpen] = useState(false);
 
 	const [content, setContent] = useState("");
-
 
 	const dispatch = useAppDispatch();
 	function handlerClickEdit(e: string) {
@@ -42,7 +41,7 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 			itemsDic: [...copyArr],
 		};
 
-		dispatch(createDictionary(newObg));
+		dispatch(fetchAddWordItem(newObg));
 	}
 
 	return (
@@ -56,10 +55,10 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 			></EditWord>
 			<div className={module.table}>
 				<div>
-					<p>{item.isp}</p>
+					<p>{item.rus}</p>
 				</div>
 				<div>
-					<p>{item.rus}</p>
+					<p>{item.isp}</p>
 				</div>
 				<div>
 					<p>{item.eng}</p>

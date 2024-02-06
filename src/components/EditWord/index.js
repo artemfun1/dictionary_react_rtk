@@ -1,2 +1,1 @@
-export { EditWord } from './EditWord'
-
+export { EditWord } from "./EditWord";

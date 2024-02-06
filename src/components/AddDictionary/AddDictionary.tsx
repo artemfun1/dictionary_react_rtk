@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useGenerateDictionaryItem } from "../../hooks/useGenerateDictionaryItem";
-import { createDictionary } from "../../redux/features/dictionsSlice";
+import { fetchCreateDictionaryItem } from "../../redux/features/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addDictionary.module.scss";
 
@@ -14,15 +14,15 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 	function handlerChangeName(e: any) {
 		setName(e.target.value);
 	}
-	
+
 	function handlerChangeImgUrl(e: any) {
 		setImgUrl(e.target.value);
 	}
- 
-	const obj = useGenerateDictionaryItem(imgUrl, name);
+
+	const newObj = useGenerateDictionaryItem(imgUrl, name);
 
 	function handlerSubmit() {
-		dispatch(createDictionary(obj));
+		dispatch(fetchCreateDictionaryItem(newObj));
 
 		setName("");
 		setImgUrl("");
@@ -44,51 +44,48 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 	}
 
 	const addDictionary = (
-		
-			<dialog ref={dialog} id="id" className={module.dialog}>
-				<form onSubmit={handlerSubmit} action="" method="dialog">
-					<p>Создание нового словаря</p>
-					<label htmlFor="name">Введите название словаря:</label>
-					<input
-					autoComplete='off'
-						onChange={e => handlerChangeName(e)}
-						placeholder="Название"
-						type="text"
-						name="name"
-						id="name"
-						value={name}
-						required
-					/>
+		<dialog ref={dialog} id="id" className={module.dialog}>
+			<form onSubmit={handlerSubmit} action="" method="dialog">
+				<p>Создание нового словаря</p>
+				<label htmlFor="name">Введите название словаря:</label>
+				<input
+					autoComplete="off"
+					onChange={e => handlerChangeName(e)}
+					placeholder="Название"
+					type="text"
+					name="name"
+					id="name"
+					value={name}
+					required
+				/>
 
-					<label htmlFor="img">Вставьте ссылку на картинку:</label>
-					<input
-					autoComplete='off'
-						onChange={e => handlerChangeImgUrl(e)}
-						placeholder="Ссылка на картинку"
-						type="text"
-						name="name"
-						id="img"
-						value={imgUrl}
-						required
-					/>
+				<label htmlFor="img">Вставьте ссылку на картинку:</label>
+				<input
+					autoComplete="off"
+					onChange={e => handlerChangeImgUrl(e)}
+					placeholder="Ссылка на картинку"
+					type="text"
+					name="name"
+					id="img"
+					value={imgUrl}
+					required
+				/>
 
-					<div>
-						<button
-							onClick={e => handlerCancelClick(e)}
-							type="button"
-							className="btn btn-outline-warning"
-						>
-							Отмена
-						</button>
+				<div>
+					<button
+						onClick={e => handlerCancelClick(e)}
+						type="button"
+						className="btn btn-outline-warning"
+					>
+						Отмена
+					</button>
 
-						
-						<button type="submit" className="btn btn-outline-success">
-							Создать
-						</button>
-					</div>
-				</form>
-			</dialog>
-		
+					<button type="submit" className="btn btn-outline-success">
+						Создать
+					</button>
+				</div>
+			</form>
+		</dialog>
 	);
 
 	return createPortal(

@@ -1,2 +1,1 @@
-export { AddWordItem } from './AddWordItem'
-
+export { AddWordItem } from "./AddWordItem";
