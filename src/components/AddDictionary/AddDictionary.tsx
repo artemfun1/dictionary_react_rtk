@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useGenerateDictionaryItem } from "../../hooks/useGenerateDictionaryItem";
-import { fetchCreateDictionaryItem } from "../../redux/features/dictionsSlice";
+import { fetchCreateDictionaryItem } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addDictionary.module.scss";
 

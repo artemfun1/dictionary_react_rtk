@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { IDictionaryState } from "../redux/features/dictionsSlice";
+import { IDictionaryState } from "../redux/features/dictionarySlice/dictionsSlice";
 
 export const useGenerateDictionaryItem: (
 	a: string,

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import { createCardId } from "../../redux/features/cardIdSlice";
-import { IDictionaryState } from "../../redux/features/dictionsSlice";
+import { createCardId } from "../../redux/features/cardIdSlice/cardIdSlice";
+import { IDictionaryState } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./dictionaryItem.module.scss";
 

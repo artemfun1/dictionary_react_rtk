@@ -6,7 +6,7 @@ import {
 	IDictionaryItem,
 	IDictionaryState,
 	fetchAddWordItem,
-} from "../../redux/features/dictionsSlice";
+} from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addWordItem.module.scss";
 
@@ -24,7 +24,6 @@ export const AddWordItem: FunctionComponent<props> = ({
 	const [newWord, setNewWord] = useState("");
 
 	const dispatch = useAppDispatch();
-	
 
 	async function createAndTranslate() {
 		const LANG = {

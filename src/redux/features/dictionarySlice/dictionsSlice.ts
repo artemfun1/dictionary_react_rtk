@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 export interface IDictionaryItem {
 	rus: string;
@@ -44,7 +44,6 @@ export const fetchGetDictionaryItems = createAsyncThunk(
 export const fetchAddWordItem = createAsyncThunk(
 	"dictionaries/fetchAddWordItem",
 	async (newObj: IDictionaryState, { dispatch }) => {
-
 		await axios.patch(
 			`https://79bfd0f11687a52a.mokky.dev/dic/${newObj.id}`,
 			newObj

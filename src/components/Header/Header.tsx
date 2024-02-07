@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 import loshadka from "../../img/loshadka.png";
+import { fetchDeleteAll } from "../../redux/features/dictionarySlice/dictionsSlice";
+import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./header.module.scss";
-import { useAppDispatch } from '../../redux/store/hooksRedux'
-import { fetchDeleteAll } from '../../redux/features/dictionsSlice'
 
 export const Header = () => {
+	const dispatch = useAppDispatch();
 
-	const dispatch = useAppDispatch()
-
-	function handlerClick(){
-		dispatch(fetchDeleteAll())
+	function handlerClick() {
+		dispatch(fetchDeleteAll());
 	}
 
 	return (

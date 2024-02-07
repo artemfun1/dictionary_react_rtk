@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { RootState } from "../store/store";
+import { RootState } from "../../store/store";
 
 interface ICardIUd {
 	value: string;

@@ -4,6 +4,8 @@ https://artemfun1.github.io/dictionary_react_rtk
 
 
 
+//npm run deploy -- -m "Deploy React app to GitHub Pagesv4"
+
 
 
 ## Available Scripts
