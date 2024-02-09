@@ -73,7 +73,7 @@ export const EditPage = () => {
 					<div>Русский</div>
 					<div>Испанский</div>
 					<div>Английский</div>
-					<div></div>
+					<div className={module.wrong}></div>
 				</div>
 
 				<div>
