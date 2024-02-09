@@ -11,6 +11,7 @@ import {
 } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import { EditWord } from "../EditWord";
+import classNames from 'classnames'
 
 interface props {
 	obj: IDictionaryState;
@@ -53,9 +54,9 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 				setEditIsOpen={setEditIsOpen}
 				content={content}
 			></EditWord>
-			<div className={module.table}>
+			<div className={classNames(module.table)}>
 				<div>
-					<p>{item.rus}</p>
+					<p >{item.rus}</p>
 				</div>
 				<div>
 					<p>{item.isp}</p>

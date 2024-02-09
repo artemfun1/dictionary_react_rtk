@@ -9,9 +9,10 @@ import {
 	decrementFetchCount,
 	incrementFetchCount,
 } from "../redux/features/counterSlice/counterSlice";
-import { selectDictionary } from "../redux/features/dictionarySlice/dictionsSlice";
+import { fetchGetDictionaryItems, selectDictionary } from "../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/homePage.module.scss";
+import { getFetchCount } from '../redux/features/counterSlice/ServerSlice'
 
 export const HomePage = () => {
 	const dispatch = useAppDispatch();
@@ -38,10 +39,10 @@ export const HomePage = () => {
 	const count = useAppSelector(state => state.count.obj);
 
 	useEffect(() => {
-		// dispatch(fetchGetDictionaryItems());
+		dispatch(fetchGetDictionaryItems());
 	}, [dispatch]);
 	useEffect(() => {
-		// dispatch(getFetchCount());
+		dispatch(getFetchCount());
 	}, [dispatch]);
 
 	function clickPlus() {
@@ -55,7 +56,7 @@ export const HomePage = () => {
 	return (
 		<div className={module.container}>
 			{/* TEST DIV FOR DEV */}
-			<div className='TEST DIV FOR DEV'>
+			{/* <div className='TEST DIV FOR DEV'>
 				<button onClick={() => setCounts("1")}>click 1</button>
 				<button onClick={() => setCounts("2")}>click 2</button>
 				<button onClick={() => setCounts("3")}>click 3</button>
@@ -70,7 +71,7 @@ export const HomePage = () => {
 				<p>{count.value}</p>
 				<button onClick={clickMinus}>-</button>
 				<p>{JSON.stringify(count, null, 2)}</p>
-			</div>
+			</div> */}
 
 
 			{!dictionaries.arrayDictionaries.length && (

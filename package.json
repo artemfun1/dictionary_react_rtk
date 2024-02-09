@@ -13,6 +13,7 @@
 		"@types/react": "^18.2.51",
 		"@types/react-dom": "^18.2.18",
 		"axios": "^1.6.7",
+		"classnames": "^2.5.1",
 		"clsx": "^2.1.0",
 		"concurrently": "^8.2.2",
 		"date-fns": "^3.3.1",
@@ -29,8 +30,8 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"dev":"concurrently \"npm run server\" \"npm run start\"",
-		"server":"json-server -w server/db.json -p 3001",
+		"dev": "concurrently \"npm run server\" \"npm run start\"",
+		"server": "json-server -w server/db.json -p 3001",
 		"predeploy": "npm run build",
 		"deploy": "gh-pages -d build",
 		"start": "react-scripts start",

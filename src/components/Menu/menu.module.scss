@@ -1,20 +1,29 @@
 .root {
-	
 	background-color: #d3dfc6;
 	min-width: 120px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
- 
+
+	@media (max-width: 500px) {
+
+		max-width: 90px;
+		min-width: 90px;
+	}
 
 	a {
 		margin-top: 30px;
 		margin-bottom: 30px;
 	}
+	.buttons {
+		@media (max-width: 500px) {
+			border-color: red;
+		}
+	}
 
 	button {
 		width: 80px;
-    display: flex;
+		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
