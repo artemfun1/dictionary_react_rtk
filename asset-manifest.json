@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/dictionary_react_rtk/static/css/main.bf3f614f.css",
-    "main.js": "/dictionary_react_rtk/static/js/main.6bbc153e.js",
+    "main.js": "/dictionary_react_rtk/static/js/main.891ab0ea.js",
     "static/media/loshadka.png": "/dictionary_react_rtk/static/media/loshadka.328f4c4c9987ca9dea1e.png",
     "static/media/edit.svg": "/dictionary_react_rtk/static/media/edit.5afbaafc975b6df95ad38ca968147e97.svg",
     "static/media/remove.svg": "/dictionary_react_rtk/static/media/remove.c8ca9d7647fd68689963ad9a1e5a5277.svg",
     "index.html": "/dictionary_react_rtk/index.html",
     "main.bf3f614f.css.map": "/dictionary_react_rtk/static/css/main.bf3f614f.css.map",
-    "main.6bbc153e.js.map": "/dictionary_react_rtk/static/js/main.6bbc153e.js.map"
+    "main.891ab0ea.js.map": "/dictionary_react_rtk/static/js/main.891ab0ea.js.map"
   },
   "entrypoints": [
     "static/css/main.bf3f614f.css",
-    "static/js/main.6bbc153e.js"
+    "static/js/main.891ab0ea.js"
   ]
 }
