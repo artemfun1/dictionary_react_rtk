@@ -14,10 +14,10 @@ export const store = configureStore({
 		count: counterReducer,
 		
 	},
-	middleware: (getDefaultMiddleware)=> getDefaultMiddleware().concat(sagaMiddleware)
+	middleware: (getDefaultMiddleware)=> getDefaultMiddleware({thunk:false}).concat(sagaMiddleware)
 })
 
-// {thunk:false}
+
 
 
 sagaMiddleware.run(sagasCount)
