@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import {
 	IDictionaryItem,
 	IDictionaryState,
-	fetchAddWordItem,
+	addWordItem,
 } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addWordItem.module.scss";
@@ -59,7 +59,6 @@ export const AddWordItem: FunctionComponent<props> = ({
 			eng: engWord,
 			itemId: nanoid(),
 		};
-		console.log(newObj);
 
 		return newObj;
 	}
@@ -91,14 +90,14 @@ export const AddWordItem: FunctionComponent<props> = ({
 				...dataObj,
 				itemsDic: [newWords],
 			};
-			dispatch(fetchAddWordItem(newObg));
+			dispatch(addWordItem(newObg));
 		} else if (dataObj?.itemsDic) {
 			const newObg: IDictionaryState = {
 				...dataObj,
 				itemsDic: [...dataObj.itemsDic, newWords],
 			};
 
-			dispatch(fetchAddWordItem(newObg));
+			dispatch(addWordItem(newObg));
 		}
 
 		setNewWord("");

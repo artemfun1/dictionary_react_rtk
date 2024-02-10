@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import {
 	IDictionaryItem,
 	IDictionaryState,
-	fetchAddWordItem,
+	addWordItem,
 } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./editWord.module.scss";
@@ -95,7 +95,7 @@ export const EditWord: FunctionComponent<IProps> = ({
 			itemsDic: [...copyArr],
 		};
 
-		dispatch(fetchAddWordItem(newObg));
+		dispatch(addWordItem(newObg));
 
 		setNewWord(content);
 		setEditIsOpen(false);

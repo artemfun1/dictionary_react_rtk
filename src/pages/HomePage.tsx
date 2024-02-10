@@ -1,73 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect,  } from "react";
 import { DictionaryItem } from "../components/DictionaryItem";
-import {
-	useAddCountObjMutation,
-	useDeleteCountObjMutation,
-	useGetCountQuery,
-} from "../redux/features/counterSlice/countApi";
-import {
-	decrementFetchCount,
-	incrementFetchCount,
-} from "../redux/features/counterSlice/counterSlice";
-import { fetchGetDictionaryItems, selectDictionary } from "../redux/features/dictionarySlice/dictionsSlice";
+
+
+import { getDicItem, selectDictionary } from "../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/homePage.module.scss";
-import { getFetchCount } from '../redux/features/counterSlice/ServerSlice'
+import { decCount, getCount, incCount } from '../redux/features/counterSlice/counterSlice'
 
 export const HomePage = () => {
 	const dispatch = useAppDispatch();
-
-	const [counts, setCounts] = useState("");
-	const { data = [] } = useGetCountQuery(counts);
-	const [addCountObj, {}] = useAddCountObjMutation();
-	const [deleteObj] = useDeleteCountObjMutation();
-
-	async function handleAddCountObj() {
-		await addCountObj({
-			status: "ololo",
-			error: true,
-			value: 100500,
-		}).unwrap();
-	}
-
-	async function handleDeleteCountObj(id:any) {
-		await deleteObj(id).unwrap()
-	}
-
 	const dictionaries = useAppSelector(selectDictionary);
+
 
 	const count = useAppSelector(state => state.count.obj);
 
 	useEffect(() => {
-		dispatch(fetchGetDictionaryItems());
+		dispatch(getDicItem());
 	}, [dispatch]);
 	useEffect(() => {
-		dispatch(getFetchCount());
-	}, [dispatch]);
+		// dispatch(getCount());
+	}, []);
 
 	function clickPlus() {
-		dispatch(incrementFetchCount());
+		dispatch(incCount());
 	}
 
 	function clickMinus() {
-		dispatch(decrementFetchCount());
+		dispatch(decCount());
 	}
 
 	return (
 		<div className={module.container}>
 			{/* TEST DIV FOR DEV */}
 			{/* <div className='TEST DIV FOR DEV'>
-				<button onClick={() => setCounts("1")}>click 1</button>
-				<button onClick={() => setCounts("2")}>click 2</button>
-				<button onClick={() => setCounts("3")}>click 3</button>
-				<button onClick={handleAddCountObj}>click add</button>
-			
-				{data.map((item: any, i: any) => (
-					<p onClick={()=>handleDeleteCountObj(item.id)} key={i}>{item.id}</p>
-				))}
-
 				<button onClick={clickPlus}>+</button>
-
 				<p>{count.value}</p>
 				<button onClick={clickMinus}>-</button>
 				<p>{JSON.stringify(count, null, 2)}</p>

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useGenerateDictionaryItem } from "../../hooks/useGenerateDictionaryItem";
-import { fetchCreateDictionaryItem } from "../../redux/features/dictionarySlice/dictionsSlice";
+import { createNewDicItem } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./addDictionary.module.scss";
 
@@ -22,7 +22,7 @@ export const AddDictionary = ({ isOpen, setIsOpen }: any) => {
 	const newObj = useGenerateDictionaryItem(imgUrl, name);
 
 	function handlerSubmit() {
-		dispatch(fetchCreateDictionaryItem(newObj));
+		dispatch(createNewDicItem(newObj));
 
 		setName("");
 		setImgUrl("");

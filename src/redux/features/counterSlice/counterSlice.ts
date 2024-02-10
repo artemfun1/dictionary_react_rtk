@@ -1,6 +1,6 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAction, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { RootState } from "../../store/store";
+import { put, select } from "redux-saga/effects";
 
 interface ICounter {
 	id: number;
@@ -13,56 +13,46 @@ const initialState: { obj: ICounter } = {
 	obj: { id: 0, status: "idle", error: null, value: 0 },
 };
 
-export const getFetchCount = createAsyncThunk(
-	"counter/getFetchCount",
-	async () => {
-		try {
-			const response = await axios.get(
-				"https://cd13ad256aa86858.mokky.dev/count"
-			);
-			return response.data[0];
-		} catch (error) {
-			console.log(error);
-		}
-	}
-);
+export function* getCountSaga(): any {
+	const response = yield axios.get("https://cd13ad256aa86858.mokky.dev/count");
+	yield put(setCount(response.data[0]));
+}
 
-export const decrementFetchCount = createAsyncThunk(
-	"counter/decrementFetchCount",
-	async (_, { dispatch, getState }) => {
-		const { count } = getState() as { count: { obj: ICounter } };
-		const newState = {
-			...count.obj,
-			value: count.obj.value - 1,
-		};
-		try {
-			const newObj = await axios.patch(
-				"https://cd13ad256aa86858.mokky.dev/count/0",
-				newState
-			);
-			console.log(newObj.data);
-			dispatch(decrement(newObj.data));
-		} catch (error) {
-			console.log(error);
-		}
-	}
-);
-export const incrementFetchCount = createAsyncThunk(
-	"counter/incrementFetchCount",
-	async (_, { dispatch, getState }) => {
-		const { count } = getState() as { count: { obj: ICounter } };
-		const newState = { ...count.obj, value: count.obj.value + 1 };
-		try {
-			const newObj = await axios.patch(
-				"https://cd13ad256aa86858.mokky.dev/count/0",
-				newState
-			);
-			dispatch(increment(newObj.data));
-		} catch (error) {
-			console.log(error);
-		}
-	}
-);
+export function* decrementCountSaga(): any {
+	const state = yield select();
+	const newState = yield {
+		...state.count.obj,
+		value: state.count.obj.value - 1,
+	};
+	const newObj = yield axios.patch(
+		"https://cd13ad256aa86858.mokky.dev/count/0",
+		newState
+	);
+	yield put(decrement(newObj.data));
+}
+
+export function* incrementCountSaga(): any {
+	const state = yield select();
+
+	const newState = yield {
+		...state.count.obj,
+		value: state.count.obj.value + 1,
+	};
+
+	const newObj = yield axios.patch(
+		"https://cd13ad256aa86858.mokky.dev/count/0",
+		newState
+	);
+	yield put(increment(newObj.data));
+}
+
+export const GET_COUNT = "counter/getCount";
+export const INC_COUNT = "counter/incCount";
+export const DEC_COUNT = "counter/decCount";
+
+export const getCount = createAction(GET_COUNT);
+export const incCount = createAction(INC_COUNT);
+export const decCount = createAction(DEC_COUNT);
 
 export const editCounter = createSlice({
 	name: "counter",
@@ -79,27 +69,25 @@ export const editCounter = createSlice({
 		},
 	},
 
-	extraReducers: getCountReducer => {
-		getCountReducer
-			.addCase(getFetchCount.pending, state => {
-				state.obj.status = "loading";
-				console.log("pending", state.obj.status);
-			})
-			.addCase(getFetchCount.fulfilled, (state, action) => {
-				state.obj.status = "succeeded";
-				console.log("fulfilled", state.obj.status, action.payload);
-				state.obj.value = action.payload.value;
-				state.obj.status = "idle";
-			})
-			.addCase(getFetchCount.rejected, state => {
-				state.obj.status = "failed";
-				console.log("rejected");
-			});
-	},
+	// extraReducers: getCountReducer => {
+	// 	getCountReducer
+	// 		.addCase(getCountSaga.pending, state => {
+	// 			// state.obj.status = "loading";
+	// 			// console.log("pending", state.obj.status);
+	// 		})
+	// 		.addCase(getCountSaga.fulfilled, (state, action) => {
+	// 			// state.obj.status = "succeeded";
+	// 			// console.log("fulfilled", state.obj.status, action.payload);
+	// 			state.obj.value = action.payload.value;
+	// 			// state.obj.status = "idle";
+	// 		})
+	// 		.addCase(getCountSaga.rejected, state => {
+	// 			// state.obj.status = "failed";
+	// 			// console.log("rejected");
+	// 		});
+	// },
 });
 
-export const selectCount = (state: RootState) => state.count.obj;
-
-export const { increment, decrement, setCount } = editCounter.actions;
+export const { setCount, increment, decrement } = editCounter.actions;
 
 export default editCounter.reducer;

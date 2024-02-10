@@ -1,6 +1,17 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+	PayloadAction,
+	createAction,
+	createAsyncThunk,
+	createSlice,
+} from "@reduxjs/toolkit";
 import axios from "axios";
+import { put } from "redux-saga/effects";
 import { RootState } from "../../store/store";
+
+type sagaProps = {
+	type: string;
+	payload: IDictionaryItem;
+};
 
 export interface IDictionaryItem {
 	rus: string;
@@ -22,51 +33,41 @@ const initialState: { arrayDictionaries: IDictionaryState[] } = {
 	arrayDictionaries: [],
 };
 
-export const fetchCreateDictionaryItem = createAsyncThunk(
-	"dictionaries/fetchCreateDictionaryItem",
-	async (newObj: IDictionaryState, { dispatch }) => {
-		const resp = await axios.post(
-			"https://79bfd0f11687a52a.mokky.dev/dic",
-			newObj
-		);
-		dispatch(createDictionaryItem(resp.data));
-	}
-);
+export function* sagaGetDictionaryItems(): any {
+	const resp = yield axios.get("https://79bfd0f11687a52a.mokky.dev/dic");
+	yield put(setDictionaryItems(resp.data));
+}
 
-export const fetchGetDictionaryItems = createAsyncThunk(
-	"dictionaries/fetchGetDictionaryItems",
-	async (_, { dispatch }) => {
-		const resp = await axios.get("https://79bfd0f11687a52a.mokky.dev/dic");
-		dispatch(setDictionaryItems(resp.data));
-	}
-);
+export function* sagaCreateDictionaryItem(some: sagaProps): any {
+	const newObj: IDictionaryState = yield some.payload;
+	const resp = yield axios.post(
+		"https://79bfd0f11687a52a.mokky.dev/dic",
+		newObj
+	);
+	yield put(createDictionaryItem(resp.data));
+}
 
-export const fetchAddWordItem = createAsyncThunk(
-	"dictionaries/fetchAddWordItem",
-	async (newObj: IDictionaryState, { dispatch }) => {
-		await axios.patch(
-			`https://79bfd0f11687a52a.mokky.dev/dic/${newObj.id}`,
-			newObj
-		);
-		dispatch(addWordInDic(newObj));
-	}
-);
+export function* sagaAddWordItem(some: sagaProps): any {
+	const newObj: IDictionaryState = yield some.payload;
+	yield axios.patch(
+		`https://79bfd0f11687a52a.mokky.dev/dic/${newObj.id}`,
+		newObj
+	);
+	yield put(addWordInDic(newObj));
+}
 
-export const fetchDeleteDicItem = createAsyncThunk(
-	"dictionaries/fetchAddWordItem",
-	async (obj: IDictionaryState, { dispatch }) => {
-		await axios.delete(`https://79bfd0f11687a52a.mokky.dev/dic/${obj.id}`);
-		dispatch(deleteDicItem(obj));
-	}
-);
+export function* sagaDeleteDicItem(some:sagaProps){
+	const obj: IDictionaryState = yield some.payload;
+	yield axios.delete(`https://79bfd0f11687a52a.mokky.dev/dic/${obj.id}`);
+	yield	put(deleteDicItem(obj));
+} 
 
-export const fetchDeleteAll = createAsyncThunk(
-	"dictionaries/fetchDeleteAll",
-	async (_, { dispatch }) => {
-		await axios.patch(`https://79bfd0f11687a52a.mokky.dev/dic/`, []);
-		dispatch(deleteAll());
+
+export function* sagaDeleteAll(){
+	yield  axios.patch(`https://79bfd0f11687a52a.mokky.dev/dic/`, []);
+	 yield 	put(deleteAll());
 	}
-);
+
 
 export const dictionarySlice = createSlice({
 	name: "dictionaries",
@@ -109,6 +110,24 @@ export const dictionarySlice = createSlice({
 		},
 	},
 });
+
+export const SET_DICTIONARY_ITEM = "dictionaries/sagaGetDictionaryItems";
+export const CREATE_DICTIONARY_ITEM = "dictionaries/sagaCreateDictionaryItem";
+export const ADD_WORD_DICTIONARY_ITEM = "dictionaries/sagaAddWordItem";
+export const DELETE_DICTIONARY_ITEM = "dictionaries/sagaDeleteDicItem";
+export const DELETE_ALL_DICTIONARY_ITEM = "dictionaries";
+
+export const getDicItem = createAction(SET_DICTIONARY_ITEM);
+export const createNewDicItem = createAction<IDictionaryState>(
+	CREATE_DICTIONARY_ITEM
+);
+export const addWordItem = createAction<IDictionaryState>(
+	ADD_WORD_DICTIONARY_ITEM
+);
+export const deleteSagaDicItem = createAction<IDictionaryState>(
+	DELETE_DICTIONARY_ITEM
+);
+export const deleteAllDicItem = createAction(DELETE_ALL_DICTIONARY_ITEM) 
 
 export const selectDictionary = (state: RootState) => state.dictionaries;
 

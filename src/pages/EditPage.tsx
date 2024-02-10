@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AddWordItem } from "../components/AddWordItem";
 import { WordItem } from "../components/WordItem";
 import { selectCardId } from "../redux/features/cardIdSlice/cardIdSlice";
-import { fetchDeleteDicItem } from "../redux/features/dictionarySlice/dictionsSlice";
+import { deleteSagaDicItem } from "../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/editPage.module.scss";
 
@@ -28,7 +28,7 @@ export const EditPage = () => {
 
 	function handlerDeleteDic() {
 		if (objCard) {
-			dispatch(fetchDeleteDicItem(objCard));
+			dispatch(deleteSagaDicItem(objCard));
 		}
 	}
 

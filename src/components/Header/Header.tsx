@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import loshadka from "../../img/loshadka.png";
-import { fetchDeleteAll } from "../../redux/features/dictionarySlice/dictionsSlice";
+import { deleteAllDicItem } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import module from "./header.module.scss";
 
@@ -8,7 +8,7 @@ export const Header = () => {
 	const dispatch = useAppDispatch();
 
 	function handlerClick() {
-		dispatch(fetchDeleteAll());
+		dispatch(deleteAllDicItem());
 	}
 
 	return (

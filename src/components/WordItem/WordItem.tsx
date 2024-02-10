@@ -7,7 +7,7 @@ import removeSvg from "../../img/remove.svg";
 import {
 	IDictionaryItem,
 	IDictionaryState,
-	fetchAddWordItem,
+	addWordItem,
 } from "../../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch } from "../../redux/store/hooksRedux";
 import { EditWord } from "../EditWord";
@@ -42,7 +42,7 @@ export const WordItem: FunctionComponent<props> = ({ obj, item }) => {
 			itemsDic: [...copyArr],
 		};
 
-		dispatch(fetchAddWordItem(newObg));
+		dispatch(addWordItem(newObg));
 	}
 
 	return (
