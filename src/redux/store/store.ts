@@ -6,12 +6,14 @@ import dictionaryReducer from "../features/dictionarySlice/dictionsSlice";
 import { sagaMiddleware } from '../Saga/createSaga'
 import { sagasCount } from '../Saga/countSagas'
 import { sagasDictionary } from '../Saga/dictionarySagas'
+import loadingReducer from '../features/loadingSlice/loadingSlice'
 
 export const store = configureStore({
 	reducer: {
 		dictionaries: dictionaryReducer,
 		cardId: cardIdReducer,
 		count: counterReducer,
+		loading:loadingReducer
 		
 	},
 	middleware: (getDefaultMiddleware)=> getDefaultMiddleware({thunk:false}).concat(sagaMiddleware)

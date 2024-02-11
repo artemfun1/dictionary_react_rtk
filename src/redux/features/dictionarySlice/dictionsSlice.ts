@@ -13,6 +13,7 @@ import {
 import { put, select } from "redux-saga/effects";
 import { db } from "../../FireBase/InitFireBase";
 import { RootState } from "../../store/store";
+import { setFalseLoading, setTrueLoading } from "../loadingSlice/loadingSlice";
 
 type sagaProps = {
 	type: string;
@@ -41,39 +42,62 @@ const initialState: { arrayDictionaries: IDictionaryState[] } = {
 
 export function* sagaGetDictionaryItems(): any {
 	const dataSnapshot = yield getDocs(collection(db, "dictionary_items"));
+
 	const dataList = yield dataSnapshot.docs.map(
 		(doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => doc.data()
 	);
+
 	const response: IDictionaryState[] = yield dataList[0].dicArray;
+
 	yield put(setDictionaryItems(response));
+
+	yield put(setFalseLoading());
 }
 
 export function* sagaCreateDictionaryItem(some: sagaProps): any {
+	yield put(setTrueLoading());
+
 	const newObj: IDictionaryState = yield some.payload;
 	const docRef = yield doc(db, "dictionary_items", "all_items");
 	yield updateDoc(docRef, { dicArray: arrayUnion(newObj) });
 	yield put(createDictionaryItem(newObj));
+	yield put(setFalseLoading());
 }
 
 export function* sagaAddWordItem(some: sagaProps): any {
+	yield put(setTrueLoading());
+
 	const newObj: IDictionaryState = yield some.payload;
+
 	yield put(addWordInDic(newObj));
+
 	const state = yield select(state => state.dictionaries.arrayDictionaries);
+
 	const docRef = yield doc(db, "dictionary_items", "all_items");
-	yield setDoc(docRef, { dicArray: [...state] });
+	yield updateDoc(docRef, { dicArray: [...state] });
+
+	yield put(setFalseLoading());
 }
 
 export function* sagaDeleteDicItem(some: sagaProps): any {
+	yield put(setTrueLoading());
 	const obj: IDictionaryState = yield some.payload;
 	const docRef = yield doc(db, "dictionary_items", "all_items");
 	yield updateDoc(docRef, { dicArray: arrayRemove(obj) });
+
 	yield put(deleteDicItem(obj));
+	yield setTimeout(() => {}, 1000);
+
+	yield put(setFalseLoading());
 }
 
 export function* sagaDeleteAll(): any {
+	yield put(setTrueLoading());
+
 	const docRef = yield doc(db, "dictionary_items", "all_items");
 	yield setDoc(docRef, { dicArray: [] });
 	yield put(deleteAll());
+	yield put(setFalseLoading());
 }
 
 export const dictionarySlice = createSlice({

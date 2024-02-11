@@ -14,6 +14,7 @@ import {
 } from "../redux/features/counterSlice/counterSlice";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../redux/FireBase/InitFireBase";
+import { setTrueLoading } from '../redux/features/loadingSlice/loadingSlice'
 
 export const HomePage = () => {
 	const dispatch = useAppDispatch();
@@ -22,18 +23,24 @@ export const HomePage = () => {
 	const count = useAppSelector(state => state.count.obj);
 
 	useEffect(() => {
-		dispatch(getDicItem());
+		dispatch(setTrueLoading())
+		setTimeout(()=>{
+				dispatch(getDicItem());
+		
+		},500)
+	
 	}, [dispatch]);
+
 	useEffect(() => {
-		dispatch(getCount());
+		// dispatch(getCount());
 	}, []);
 
 	function clickPlus() {
-		dispatch(incCount());
+		// dispatch(incCount());
 	}
 
 	function clickMinus() {
-		dispatch(decCount());
+		// dispatch(decCount());
 	}
 
 	async function getData() {
@@ -41,8 +48,6 @@ export const HomePage = () => {
 		const dataSnapshot = await getDocs(collection(db, "test_counter"));
 
 		const dataList = dataSnapshot.docs.map(doc => doc.data());
-		console.log(dataList)
-		// return dataList;
 	}
 
 	return (
