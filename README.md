@@ -1,6 +1,6 @@
 # GitHub Pages
 
-https://artemfun1.github.io/dictionary_react_rtk
+https://artemfun1.github.io/dictionary_react_rtk_saga_firebase-firestore
 
 
 
