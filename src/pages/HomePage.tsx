@@ -1,17 +1,11 @@
 import { useEffect } from "react";
 import { DictionaryItem } from "../components/DictionaryItem";
-
 import {
 	getDicItem,
 	selectDictionary,
 } from "../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/homePage.module.scss";
-import {
-	decCount,
-	getCount,
-	incCount,
-} from "../redux/features/counterSlice/counterSlice";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../redux/FireBase/InitFireBase";
 import { setTrueLoading } from '../redux/features/loadingSlice/loadingSlice'

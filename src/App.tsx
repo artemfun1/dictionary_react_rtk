@@ -19,8 +19,8 @@ function App() {
 				<Menu setIsOpen={setIsOpenAddDic} />
 				<main className={module.main}>
 					<Routes>
-						<Route path="/dictionary_react_rtk" element={<HomePage />} />
-						<Route path="/dictionary_react_rtk/edit" element={<EditPage />} />
+						<Route path="/dictionary_react_rtk_saga_firebase-firestore" element={<HomePage />} />
+						<Route path="/dictionary_react_rtk_saga_firebase-firestore/edit" element={<EditPage />} />
 						<Route path="*" element={<NotFoundPage />} />
 					</Routes>
 				</main>

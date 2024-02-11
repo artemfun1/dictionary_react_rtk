@@ -36,7 +36,7 @@ export const EditPage = () => {
 
 	useEffect(() => {
 		if (!objCard) {
-			navigate("dictionary_react_rtk");
+			navigate("dictionary_react_rtk_saga_firebase-firestore");
 		}
 	});
 
@@ -94,7 +94,7 @@ export const EditPage = () => {
 					Добавить слово
 				</button>
 
-				<Link to="/dictionary_react_rtk">
+				<Link to="/dictionary_react_rtk_saga_firebase-firestore">
 					<button
 						onClick={handlerDeleteDic}
 						type="button"

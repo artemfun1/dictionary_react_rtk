@@ -6,8 +6,6 @@ import App from "./App";
 import "./index.css";
 import { store } from "./redux/store/store";
 // import './redux/FireBase/InitFireBase'
-import firebase from "firebase/compat/app";
-// Required for side-effects
 import "firebase/firestore";
 
 

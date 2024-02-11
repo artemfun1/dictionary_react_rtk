@@ -1,7 +1,7 @@
 {
-	"name": "dictionary_react_rtk_saga_firebase",
+	"name": "dictionary_react_rtk_saga_firebase-firestore",
 	"version": "0.1.0",
-	"homepage": "https://artemfun1.github.io/dictionary_react_rtk",
+	"homepage": "https://artemfun1.github.io/dictionary_react_rtk_saga_firebase-firestore",
 	"private": true,
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.1.0",

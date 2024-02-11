@@ -14,7 +14,7 @@ export const Menu = ({ setIsOpen }: any) => {
 
 	return (
 		<aside className={module.root}>
-			<Link to="dictionary_react_rtk">
+			<Link to="dictionary_react_rtk_saga_firebase-firestore">
 				<button type="button" className="btn btn-primary buttons">
 					Словари
 				</button>
