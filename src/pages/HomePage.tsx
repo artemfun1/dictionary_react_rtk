@@ -1,16 +1,23 @@
-import { useEffect,  } from "react";
+import { useEffect } from "react";
 import { DictionaryItem } from "../components/DictionaryItem";
 
-
-import { getDicItem, selectDictionary } from "../redux/features/dictionarySlice/dictionsSlice";
+import {
+	getDicItem,
+	selectDictionary,
+} from "../redux/features/dictionarySlice/dictionsSlice";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooksRedux";
 import module from "../scss/homePage.module.scss";
-import { decCount, getCount, incCount } from '../redux/features/counterSlice/counterSlice'
+import {
+	decCount,
+	getCount,
+	incCount,
+} from "../redux/features/counterSlice/counterSlice";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../redux/FireBase/InitFireBase";
 
 export const HomePage = () => {
 	const dispatch = useAppDispatch();
 	const dictionaries = useAppSelector(selectDictionary);
-
 
 	const count = useAppSelector(state => state.count.obj);
 
@@ -18,7 +25,7 @@ export const HomePage = () => {
 		dispatch(getDicItem());
 	}, [dispatch]);
 	useEffect(() => {
-		// dispatch(getCount());
+		dispatch(getCount());
 	}, []);
 
 	function clickPlus() {
@@ -29,16 +36,26 @@ export const HomePage = () => {
 		dispatch(decCount());
 	}
 
+	async function getData() {
+
+		const dataSnapshot = await getDocs(collection(db, "test_counter"));
+
+		const dataList = dataSnapshot.docs.map(doc => doc.data());
+		console.log(dataList)
+		// return dataList;
+	}
+
 	return (
 		<div className={module.container}>
 			{/* TEST DIV FOR DEV */}
-			{/* <div className='TEST DIV FOR DEV'>
+			{/* <div className="TEST DIV FOR DEV">
 				<button onClick={clickPlus}>+</button>
 				<p>{count.value}</p>
 				<button onClick={clickMinus}>-</button>
 				<p>{JSON.stringify(count, null, 2)}</p>
-			</div> */}
 
+				<button onClick={getData}>dbFireBase</button>
+			</div> */}
 
 			{!dictionaries.arrayDictionaries.length && (
 				<div style={{ marginTop: "70px" }}>

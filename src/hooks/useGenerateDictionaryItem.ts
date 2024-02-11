@@ -6,7 +6,7 @@ export const useGenerateDictionaryItem: (
 	b: string
 ) => IDictionaryState = (imgUrl, name) => {
 	return {
-		id: "",
+		id: nanoid(),
 		idDic: nanoid(),
 		imgDic: imgUrl,
 		nameDic: name,

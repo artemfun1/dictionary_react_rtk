@@ -1,6 +1,15 @@
 import { PayloadAction, createAction, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import {
+	DocumentData,
+	QueryDocumentSnapshot,
+	collection,
+	doc,
+	getDocs,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
 import { put, select } from "redux-saga/effects";
+import { db } from "../../FireBase/InitFireBase";
 
 interface ICounter {
 	id: number;
@@ -14,36 +23,41 @@ const initialState: { obj: ICounter } = {
 };
 
 export function* getCountSaga(): any {
-	const response = yield axios.get("https://cd13ad256aa86858.mokky.dev/count");
-	yield put(setCount(response.data[0]));
+	const dataSnapshot = yield getDocs(collection(db, "test_counter"));
+	const dataList = yield dataSnapshot.docs.map(
+		(doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => doc.data()
+	);
+	const response: ICounter = yield dataList[0];
+	yield put(setCount(response));
 }
 
 export function* decrementCountSaga(): any {
 	const state = yield select();
-	const newState = yield {
+	const newObj:ICounter = yield {
 		...state.count.obj,
 		value: state.count.obj.value - 1,
 	};
-	const newObj = yield axios.patch(
-		"https://cd13ad256aa86858.mokky.dev/count/0",
-		newState
-	);
-	yield put(decrement(newObj.data));
+
+	const DocDBRef = yield doc(db, "test_counter", "3J2JKrEK2bbQ7v8m0BD1");
+
+	yield setDoc(DocDBRef, {value: newObj.value },{ merge: true });
+
+	yield put(decrement(newObj));
 }
 
 export function* incrementCountSaga(): any {
 	const state = yield select();
 
-	const newState = yield {
+	const newObj:ICounter = yield {
 		...state.count.obj,
 		value: state.count.obj.value + 1,
 	};
 
-	const newObj = yield axios.patch(
-		"https://cd13ad256aa86858.mokky.dev/count/0",
-		newState
-	);
-	yield put(increment(newObj.data));
+	const DocDBRef = yield doc(db, "test_counter", "3J2JKrEK2bbQ7v8m0BD1");
+
+	yield updateDoc(DocDBRef, {value: newObj.value });
+
+	yield put(decrement(newObj));
 }
 
 export const GET_COUNT = "counter/getCount";

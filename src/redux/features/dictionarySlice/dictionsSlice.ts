@@ -1,11 +1,17 @@
+import { PayloadAction, createAction, createSlice } from "@reduxjs/toolkit";
 import {
-	PayloadAction,
-	createAction,
-	createAsyncThunk,
-	createSlice,
-} from "@reduxjs/toolkit";
-import axios from "axios";
-import { put } from "redux-saga/effects";
+	DocumentData,
+	QueryDocumentSnapshot,
+	arrayRemove,
+	arrayUnion,
+	collection,
+	doc,
+	getDocs,
+	setDoc,
+	updateDoc,
+} from "firebase/firestore";
+import { put, select } from "redux-saga/effects";
+import { db } from "../../FireBase/InitFireBase";
 import { RootState } from "../../store/store";
 
 type sagaProps = {
@@ -34,40 +40,41 @@ const initialState: { arrayDictionaries: IDictionaryState[] } = {
 };
 
 export function* sagaGetDictionaryItems(): any {
-	const resp = yield axios.get("https://79bfd0f11687a52a.mokky.dev/dic");
-	yield put(setDictionaryItems(resp.data));
+	const dataSnapshot = yield getDocs(collection(db, "dictionary_items"));
+	const dataList = yield dataSnapshot.docs.map(
+		(doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => doc.data()
+	);
+	const response: IDictionaryState[] = yield dataList[0].dicArray;
+	yield put(setDictionaryItems(response));
 }
 
 export function* sagaCreateDictionaryItem(some: sagaProps): any {
 	const newObj: IDictionaryState = yield some.payload;
-	const resp = yield axios.post(
-		"https://79bfd0f11687a52a.mokky.dev/dic",
-		newObj
-	);
-	yield put(createDictionaryItem(resp.data));
+	const docRef = yield doc(db, "dictionary_items", "all_items");
+	yield updateDoc(docRef, { dicArray: arrayUnion(newObj) });
+	yield put(createDictionaryItem(newObj));
 }
 
 export function* sagaAddWordItem(some: sagaProps): any {
 	const newObj: IDictionaryState = yield some.payload;
-	yield axios.patch(
-		`https://79bfd0f11687a52a.mokky.dev/dic/${newObj.id}`,
-		newObj
-	);
 	yield put(addWordInDic(newObj));
+	const state = yield select(state => state.dictionaries.arrayDictionaries);
+	const docRef = yield doc(db, "dictionary_items", "all_items");
+	yield setDoc(docRef, { dicArray: [...state] });
 }
 
-export function* sagaDeleteDicItem(some:sagaProps){
+export function* sagaDeleteDicItem(some: sagaProps): any {
 	const obj: IDictionaryState = yield some.payload;
-	yield axios.delete(`https://79bfd0f11687a52a.mokky.dev/dic/${obj.id}`);
-	yield	put(deleteDicItem(obj));
-} 
+	const docRef = yield doc(db, "dictionary_items", "all_items");
+	yield updateDoc(docRef, { dicArray: arrayRemove(obj) });
+	yield put(deleteDicItem(obj));
+}
 
-
-export function* sagaDeleteAll(){
-	yield  axios.patch(`https://79bfd0f11687a52a.mokky.dev/dic/`, []);
-	 yield 	put(deleteAll());
-	}
-
+export function* sagaDeleteAll(): any {
+	const docRef = yield doc(db, "dictionary_items", "all_items");
+	yield setDoc(docRef, { dicArray: [] });
+	yield put(deleteAll());
+}
 
 export const dictionarySlice = createSlice({
 	name: "dictionaries",
@@ -127,7 +134,7 @@ export const addWordItem = createAction<IDictionaryState>(
 export const deleteSagaDicItem = createAction<IDictionaryState>(
 	DELETE_DICTIONARY_ITEM
 );
-export const deleteAllDicItem = createAction(DELETE_ALL_DICTIONARY_ITEM) 
+export const deleteAllDicItem = createAction(DELETE_ALL_DICTIONARY_ITEM);
 
 export const selectDictionary = (state: RootState) => state.dictionaries;
 
